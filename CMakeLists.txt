@@ -205,3 +205,30 @@ target_link_libraries(${PROJECT_NAME}_node
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+## Test build
+if(CATKIN_ENABLE_TESTING)
+  find_package(rostest REQUIRED)
+
+  add_rostest_gtest(
+    enigma_check
+    launch/test_enigma.launch
+    test/${PROJECT_NAME}_test_node.cpp
+    test/DetectionTest.cpp
+    test/EnigmaTest.cpp
+    src/Detection.cpp
+    src/Enigma.cpp
+  )
+
+  target_link_libraries(
+    enigma_check
+    ${catkin_LIBRARIES}
+    ${OpenCV_LIBS}
+  )
+
+  add_dependencies(
+    enigma_check
+    ${PROJECT_NAME}_node
+    ${${PROJECT_NAME}_EXPORTED_TARGETS}
+    ${catkin_EXPORTED_TARGETS}
+  )
+endif()
