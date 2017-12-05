@@ -1,0 +1,11 @@
+
+<launch>
+  <arg name="record" default="false"/>
+
+  <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch">
+   <arg name="world_file" value="$(find enigma)/world/custom_world_rg_3"/>
+  </include>
+
+  <node name="record" pkg="rosbag" type="record" args="--duration=35.0 -a -x /camera/(.*) -O $(find enpm808x_week_12)/result/walker.bag" if="$(arg record)"/>
+
+</launch>
