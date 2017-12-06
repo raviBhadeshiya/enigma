@@ -16,6 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   cv_bridge
   image_transport
+  message_generation
 )
 
 find_package(OpenCV REQUIRED)
@@ -54,11 +55,10 @@ find_package(OpenCV REQUIRED)
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
+add_message_files(
+  FILES
+  Detection.msg
+)
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -75,10 +75,10 @@ find_package(OpenCV REQUIRED)
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   geometry_msgs#   move_base_msgs#   sensor_msgs#   std_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  std_msgs #geometry_msgs#   move_base_msgs#   sensor_msgs#   std_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -110,9 +110,9 @@ find_package(OpenCV REQUIRED)
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES enigma
-#  CATKIN_DEPENDS geometry_msgs move_base_msgs roscpp rospy sensor_msgs std_msgs
+ INCLUDE_DIRS include
+ LIBRARIES enigma
+ CATKIN_DEPENDS geometry_msgs move_base_msgs roscpp rospy sensor_msgs std_msgs message_runtime
 #  DEPENDS system_lib
 )
 
@@ -140,8 +140,8 @@ include_directories(include
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(${PROJECT_NAME}_node src/enigma_node.cpp src/Detection.cpp src/Enigma.cpp)
-
+add_executable(${PROJECT_NAME}_node src/enigma_node.cpp src/Enigma.cpp)
+add_executable(detection_node src/detection_node.cpp src/Detection.cpp)
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -155,9 +155,12 @@ add_executable(${PROJECT_NAME}_node src/enigma_node.cpp src/Detection.cpp src/En
 ## Specify libraries to link a library or executable target against
 target_link_libraries(${PROJECT_NAME}_node
   ${catkin_LIBRARIES}
+  # ${OpenCV_LIBS}
+)
+target_link_libraries(detection_node
+  ${catkin_LIBRARIES}
   ${OpenCV_LIBS}
 )
-
 #############
 ## Install ##
 #############
@@ -211,7 +214,7 @@ if(CATKIN_ENABLE_TESTING)
 
   add_rostest_gtest(
     enigma_check
-    launch/test_enigma.launch
+    test/enigma.test
     test/${PROJECT_NAME}_test_node.cpp
     test/DetectionTest.cpp
     test/EnigmaTest.cpp
@@ -228,6 +231,7 @@ if(CATKIN_ENABLE_TESTING)
   add_dependencies(
     enigma_check
     ${PROJECT_NAME}_node
+    detection_node
     ${${PROJECT_NAME}_EXPORTED_TARGETS}
     ${catkin_EXPORTED_TARGETS}
   )

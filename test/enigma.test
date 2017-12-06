@@ -1,0 +1,14 @@
+<launch>
+
+  <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch">
+    <arg name="world_file" value="$(find enigma)/world/test_castom"/>
+    <arg name="gui" value="0"/>
+  </include>
+
+  <node name="detection_node" pkg="enigma" type="detection_node" output="screen"/>
+
+  <node name="enigma_node" pkg="enigma" type="enigma_node" output="screen"/>
+
+  <test test-name="enigma_check" pkg="enigma" type="enigma_check"/>
+
+</launch>
