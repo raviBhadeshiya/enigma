@@ -50,6 +50,7 @@
   <!--   <doc_depend>doxygen</doc_depend> -->
   <test_depend>gtest</test_depend>
   <test_depend>rostest</test_depend>
+  <test_depend>rosunit</test_depend>
 
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>geometry_msgs</build_depend>

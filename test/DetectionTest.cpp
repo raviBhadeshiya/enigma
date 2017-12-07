@@ -64,7 +64,7 @@ TEST(TEST_DETECTION, TestPublisher) {
   // Detection publisher should subscribe by this
   auto test_sub = n_.subscribe("detection", 1, &TestHelper::cb, &h);
 
-  ros::WallDuration(5).sleep();
+  ros::WallDuration(2).sleep();
   ros::spinOnce();
 
   EXPECT_EQ(test_sub.getNumPublishers(), 1);
@@ -80,7 +80,7 @@ TEST(TEST_DETECTION, TestDetection) {
   auto test_sub = n_.subscribe<sensor_msgs::Image>(
       "/camera/rgb/image_raw", 1, &Detection::imageCallBack, &testDetect);
 
-  ros::WallDuration(5).sleep();
+  ros::WallDuration(1).sleep();
   ros::spinOnce();
 
   cv::Mat testImage;
