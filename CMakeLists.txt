@@ -216,7 +216,7 @@ if(CATKIN_ENABLE_TESTING)
 
   add_rostest_gtest(
     enigma_check
-    test/enigma.test
+    test/enigma_check.test
     test/${PROJECT_NAME}_test_node.cpp
     test/DetectionTest.cpp
     test/EnigmaTest.cpp
