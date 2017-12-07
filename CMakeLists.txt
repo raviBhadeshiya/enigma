@@ -230,11 +230,11 @@ if(CATKIN_ENABLE_TESTING)
     ${OpenCV_LIBS}
   )
 
-  # add_dependencies(
-  #   enigma_check
-  #   ${PROJECT_NAME}_node
-  #   detection_node
-  #   ${${PROJECT_NAME}_EXPORTED_TARGETS}
-  #   ${catkin_EXPORTED_TARGETS}
-  # )
+  add_dependencies(
+    enigma_check
+    ${PROJECT_NAME}_node
+    detection_node
+    ${${PROJECT_NAME}_EXPORTED_TARGETS}
+    ${catkin_EXPORTED_TARGETS}
+  )
 endif()
