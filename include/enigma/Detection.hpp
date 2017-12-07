@@ -25,15 +25,31 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include <geometry_msgs/Twist.h>
 #include <ros/ros.h>
-#include "opencv2/core.hpp"
+#include <sensor_msgs/image_encodings.h>
+#include <enigma/Detection.h>
+
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+#include <cv_bridge/cv_bridge.h>
+
+#include <utility>
+#include <vector>
+#include <iostream>
 
 class Detection {
  public:
   Detection();
   explicit Detection(ros::NodeHandle n);
   ~Detection();
+  void imageCallBack(const sensor_msgs::ImageConstPtr& msg);
+  std::pair<int, int> detect(const cv::Mat& image);
+  cv::Mat postProcessing(const cv::Mat& image);
+  int countBlob(const cv::Mat& image);
+  cv::Mat getImage();
  private:
-    ros::NodeHandle n_;
+  cv_bridge::CvImagePtr cv_ptr;
+  ros::Subscriber image_sub_;
+  ros::Publisher detection_pub_;
+  enigma::Detection message;
 };

@@ -77,7 +77,7 @@ add_message_files(
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
-  std_msgs #geometry_msgs#   move_base_msgs#   sensor_msgs#   std_msgs
+  std_msgs #geometry_msgs#   move_base_msgs#   sensor_msgs#
 )
 
 ################################################

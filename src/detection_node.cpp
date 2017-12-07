@@ -26,16 +26,16 @@
  */
 #include "ros/ros.h"
 #include "std_msgs/String.h"
-#include "enigma/Enigma.hpp"
+#include "enigma/Detection.hpp"
 
 int main(int argc, char** argv) {
-  ros::init(argc, argv, "enigma");
+  ros::init(argc, argv, "enigma_detection");
 
   ros::NodeHandle n_;
 
-  Enigma robot(n_);
+  Detection detect(n_);
 
-  ROS_INFO("Enigma Node is running..");
+  ROS_INFO("Detection Node is running..");
 
   ros::spin();
 

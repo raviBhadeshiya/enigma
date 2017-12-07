@@ -24,8 +24,8 @@ $ catkin_make
 
 ---
 ### Solo Iterative Process
+
 Solo Iterative process was used for developing this package and it can be observed that estimates were improved over time.
 For detailed spreadsheet: [![Packagist](https://img.shields.io/badge/SIP-Click%20Here-yellow.svg)](https://docs.google.com/spreadsheets/d/10tGs0astZB6bFPMXlLJwByrlTDJi1ZNfbLnQGZDo5Xo/edit?usp=sharing)
 
-For sprint planning:[Click Here](https://docs.google.com/document/d/1hJ8q-_5HhWBHmOfXV9d_nZg0-gOeu8520EBP83TKBbI/edit?usp=sharing).
---- 
+For sprint planning: [Click Here](https://docs.google.com/document/d/1hJ8q-_5HhWBHmOfXV9d_nZg0-gOeu8520EBP83TKBbI/edit?usp=sharing)

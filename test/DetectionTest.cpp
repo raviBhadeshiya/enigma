@@ -54,9 +54,8 @@ TEST(TEST_DETECTION, TestSubscriber) {
   // Should Subscribe by over detection_node
   auto testingPub =
       n_.advertise<sensor_msgs::Image>("/camera/rgb/image_raw", 0);
-  ros::WallDuration(0.3).sleep();
+  ros::WallDuration(0.4).sleep();
   EXPECT_EQ(testingPub.getNumSubscribers(), 1);
-  EXPECT_TRUE(1);
 }
 
 TEST(TEST_DETECTION, TestPublisher) {
@@ -64,8 +63,10 @@ TEST(TEST_DETECTION, TestPublisher) {
   TestHelper h;
   // Detection publisher should subscribe by this
   auto test_sub = n_.subscribe("detection", 1, &TestHelper::cb, &h);
+
   ros::WallDuration(5).sleep();
   ros::spinOnce();
+
   EXPECT_EQ(test_sub.getNumPublishers(), 1);
   EXPECT_NE(h.count, 0);
   EXPECT_EQ(h.red, 2);
@@ -75,12 +76,16 @@ TEST(TEST_DETECTION, TestPublisher) {
 TEST(TEST_DETECTION, TestDetection) {
   ros::NodeHandle n_;
   Detection testDetect(n_);
+
   auto test_sub = n_.subscribe<sensor_msgs::Image>(
       "/camera/rgb/image_raw", 1, &Detection::imageCallBack, &testDetect);
+
   ros::WallDuration(5).sleep();
   ros::spinOnce();
+
   cv::Mat testImage;
   int red = 2, green = 1;
+
   EXPECT_NO_FATAL_FAILURE(testImage = testDetect.getImage());
   EXPECT_EQ(std::get<0>(testDetect.detect(testImage)), red);
   EXPECT_EQ(std::get<1>(testDetect.detect(testImage)), green);

@@ -1,7 +1,7 @@
 <launch>
 
   <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch">
-    <arg name="world_file" value="$(find enigma)/world/test_castom"/>
+    <arg name="world_file" value="$(find enigma)/world/test_custom"/>
     <arg name="gui" value="0"/>
   </include>
 

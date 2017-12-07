@@ -1,4 +1,0 @@
-<launch>
-<node name="enigma_node" pkg="enigma" type="enigma_node" output="screen"/>
-<test test-name="enigma_check" pkg="enigma" type="enigma_check"/>
-</launch>
