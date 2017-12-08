@@ -38,15 +38,13 @@ TEST(TEST_Enigma, TestInit) {
 
 TEST(TEST_Enigma, noObst) {
   // laser scan to provide a fake non-obst:
-  size_t num_readings = 100;
+  size_t num_readings = 50;
 
   sensor_msgs::LaserScan scan;
-  scan.angle_min = -1.57;
-  scan.angle_max = 1.57;
+  scan.angle_min = -1.57; scan.angle_max = 1.57;
   scan.angle_increment = 3.14 / num_readings;
   scan.time_increment = (1 / 40) / (num_readings);
-  scan.range_min = 0.0;
-  scan.range_max = 100.0;
+  scan.range_min = 0.0; scan.range_max = 100.0;
   scan.ranges.resize(num_readings);
   scan.intensities.resize(num_readings);
   for (auto& i : scan.ranges) {
@@ -57,21 +55,18 @@ TEST(TEST_Enigma, noObst) {
   Enigma robot(n_);
 
   EXPECT_FALSE(robot.isObst(scan));
-
   EXPECT_NO_FATAL_FAILURE(robot.laserCallback(scan));
 }
 
 TEST(TEST_Enigma, obst) {
   // laser scan to provide a fake obst:
-  size_t num_readings = 100;
+  size_t num_readings = 50;
 
   sensor_msgs::LaserScan scan;
-  scan.angle_min = -1.57;
-  scan.angle_max = 1.57;
+  scan.angle_min = -1.57; scan.angle_max = 1.57;
   scan.angle_increment = 3.14 / num_readings;
   scan.time_increment = (1 / 40) / (num_readings);
-  scan.range_min = 0.0;
-  scan.range_max = 100.0;
+  scan.range_min = 0.0; scan.range_max = 100.0;
   scan.ranges.resize(num_readings);
   scan.intensities.resize(num_readings);
   for (auto& i : scan.ranges) {

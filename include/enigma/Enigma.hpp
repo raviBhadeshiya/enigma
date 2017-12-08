@@ -27,12 +27,21 @@
  */
 #include <geometry_msgs/Twist.h>
 #include <ros/ros.h>
+#include <sensor_msgs/LaserScan.h>
+#include <cmath>
+#include "enigma/Detection.h"
 
 class Enigma {
  public:
     Enigma();
-    explicit Enigma(ros::NodeHandle n);
+    explicit Enigma(ros::NodeHandle n_);
     ~Enigma();
+    void laserCallback(const sensor_msgs::LaserScan& scan);
+    void detectionCallback(const enigma::Detection& msg);
+    bool isObst(const sensor_msgs::LaserScan& scan);
  private:
-    ros::NodeHandle n_;
+    geometry_msgs::Twist msgs_;
+    ros::Subscriber laser_sub_;
+    ros::Publisher velocity_pub_;
+    int red = 0, green = 0;
 };

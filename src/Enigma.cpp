@@ -28,9 +28,67 @@
 
 Enigma::Enigma() {}
 
-Enigma::Enigma(ros::NodeHandle n) {
-    n_ = n;
-    ROS_INFO("Enigma init successfully..");
+Enigma::Enigma(ros::NodeHandle n_) {
+  velocity_pub_ =
+      n_.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/navi", 10);
+
+  laser_sub_ = n_.subscribe("/scan", 10, &Enigma::laserCallback, this);
+  // Reset the the velocity
+  msgs_.linear.x = 0;
+  msgs_.angular.z = 0;
+  velocity_pub_.publish(msgs_);
+
+  ROS_INFO("Enigma init successfully..");
 }
 
-Enigma::~Enigma() {}
+Enigma::~Enigma() {
+  ROS_INFO("Turtlebot walker is shutting down..");
+  // On Destruction stop the robot
+  msgs_.linear.x = 0;
+  msgs_.angular.z = 0;
+  velocity_pub_.publish(msgs_);
+}
+
+void Enigma::laserCallback(const sensor_msgs::LaserScan& scan) {
+  ROS_DEBUG("LaserCallback called!");
+  // If obst is nearby go to turning behavior
+
+  if (isObst(scan)) {
+    msgs_.linear.x = 0;
+    msgs_.angular.z = (red != 0) ? 0.7 : -0.7;
+    velocity_pub_.publish(msgs_);
+    ROS_WARN("Obst detected!--> Turnning..");
+  } else {
+    // Else walk straight
+    msgs_.linear.x = 0.8;
+    msgs_.angular.z = 0;
+    velocity_pub_.publish(msgs_);
+    ROS_DEBUG("Straight..");
+  }
+}
+
+void Enigma::detectionCallback(const enigma::Detection& msg) {
+  green = msg.green;
+  red = msg.red;
+}
+
+bool Enigma::isObst(const sensor_msgs::LaserScan& scan){
+  size_t angle_thresold = 25;
+  double dist_thresold = 1.5;
+
+  size_t range =
+      std::round(angle_thresold * (M_PI / 180) / scan.angle_increment);
+  size_t size = scan.ranges.size() / 2;
+  size_t count = 0;
+
+  for (const auto& itr : scan.ranges) {
+    // scan->range_min is 0.45
+    if (!(count < (size - range) || count > (size + range))) {
+      if (itr <= scan.range_min + dist_thresold) {
+        return true;
+      }
+    }
+    count++;
+  }
+  return false;
+}

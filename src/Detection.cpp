@@ -52,11 +52,11 @@ void Detection::imageCallBack(const sensor_msgs::ImageConstPtr &msg) {
   // auto [red, green] = detect(cv_ptr->image);
   std::tie(red, green) = detect(cv_ptr->image);
 
-  if (red != 0 || green != 0) {
-    message.red = red;
-    message.green = green;
-    detection_pub_.publish(message);
-  }
+  // if (red != 0 || green != 0) {
+  message.red = red;
+  message.green = green;
+  detection_pub_.publish(message);
+  // }
 }
 
 std::pair<int, int> Detection::detect(const cv::Mat &image) {
