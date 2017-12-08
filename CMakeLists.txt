@@ -63,8 +63,7 @@ add_message_files(
 ## Generate services in the 'srv' folder
 # add_service_files(
 #   FILES
-#   Service1.srv
-#   Service2.srv
+#   fileSave.srv
 # )
 
 ## Generate actions in the 'action' folder
@@ -113,7 +112,7 @@ catkin_package(
  INCLUDE_DIRS include
  LIBRARIES enigma
  CATKIN_DEPENDS geometry_msgs move_base_msgs roscpp rospy sensor_msgs std_msgs message_runtime
-#  DEPENDS system_lib
+ # DEPENDS system_lib
 )
 
 ###########
@@ -144,6 +143,9 @@ add_executable(${PROJECT_NAME}_node src/enigma_node.cpp src/Enigma.cpp)
 add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_executable(detection_node src/detection_node.cpp src/Detection.cpp)
 add_dependencies(detection_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+# add_executable(enigma_map_saver src/enigma_map_saver.cpp)
+# add_dependencies(enigma_map_saver ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use
@@ -163,6 +165,10 @@ target_link_libraries(detection_node
   ${catkin_LIBRARIES}
   ${OpenCV_LIBS}
 )
+# target_link_libraries(enigma_map_saver
+#   ${catkin_LIBRARIES}
+#   # ${OpenCV_LIBS}
+# )
 #############
 ## Install ##
 #############
@@ -215,25 +221,43 @@ if(CATKIN_ENABLE_TESTING)
   find_package(rostest REQUIRED)
 
   add_rostest_gtest(
+    detection_check
+    test/detection_check.test
+    test/${PROJECT_NAME}_test_node.cpp
+    test/DetectionTest.cpp
+    src/Detection.cpp
+  )
+
+  target_link_libraries(
+    detection_check
+    ${catkin_LIBRARIES}
+    ${OpenCV_LIBS}
+  )
+
+  add_dependencies(
+    detection_check
+    ${PROJECT_NAME}_node
+    detection_node
+    ${${PROJECT_NAME}_EXPORTED_TARGETS}
+    ${catkin_EXPORTED_TARGETS}
+  )
+######
+  add_rostest_gtest(
     enigma_check
     test/enigma_check.test
     test/${PROJECT_NAME}_test_node.cpp
-    test/DetectionTest.cpp
     test/EnigmaTest.cpp
-    src/Detection.cpp
     src/Enigma.cpp
   )
 
   target_link_libraries(
     enigma_check
     ${catkin_LIBRARIES}
-    ${OpenCV_LIBS}
   )
 
   add_dependencies(
     enigma_check
     ${PROJECT_NAME}_node
-    detection_node
     ${${PROJECT_NAME}_EXPORTED_TARGETS}
     ${catkin_EXPORTED_TARGETS}
   )
