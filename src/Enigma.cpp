@@ -68,8 +68,8 @@ void Enigma::laserCallback(const sensor_msgs::LaserScan& scan) {
 }
 
 void Enigma::detectionCallback(const enigma::Detection& msg) {
-  green = msg.green;
-  red = msg.red;
+  green_ = msg.green;
+  red_ = msg.red;
 }
 
 bool Enigma::isObst(const sensor_msgs::LaserScan& scan){

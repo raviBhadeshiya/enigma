@@ -1,9 +1,8 @@
-#pragma once
 /**
- * @file Enigma.hpp
+ * @file enigma_map_saver.cpp
  * @author     Ravi Bhadeshiya
  * @version    1.0
- * @brief      Class for Security Robot api
+ * @brief      Map saver service
  *
  * @copyright  MIT License (c) 2017 Ravi Bhadeshiya
  *
@@ -25,23 +24,39 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-#include <geometry_msgs/Twist.h>
-#include <ros/ros.h>
-#include <sensor_msgs/LaserScan.h>
-#include <cmath>
-#include "enigma/Detection.h"
 
-class Enigma {
- public:
-    Enigma();
-    explicit Enigma(ros::NodeHandle n_);
-    ~Enigma();
-    void laserCallback(const sensor_msgs::LaserScan& scan);
-    void detectionCallback(const enigma::Detection& msg);
-    bool isObst(const sensor_msgs::LaserScan& scan);
- private:
-    geometry_msgs::Twist msgs_;
-    ros::Subscriber laser_sub_;
-    ros::Publisher velocity_pub_;
-    int red_ = 0, green_ = 0;
-};
+#include <unistd.h>
+#include <string>
+#include "enigma/fileSave.h"
+#include "ros/ros.h"
+
+bool serviceCallBack(enigma::fileSave::Request &req,
+                     enigma::fileSave::Response &res) {
+  char *name[4];
+  res.check = false;
+
+  name[0] = "/bin/bash";
+  name[1] = "-c";
+  // rosrun octomap_saver octomap_saver -f /tmp/temp.ot
+  // std::string file = "rosrun octomap_saver octomap_saver -f /tmp/" +
+  name[2] = "rosrun octomap_server octomap_saver -f $(rospack find enigma)/map/enigma_map.ot";
+  // name[2] = "roslaunch enigma enigma_map_saver.launch";
+  name[3] = NULL;
+  res.check = true;
+  execvp(name[0], name);
+
+  ROS_INFO("Map saved\n");
+  return true;
+}
+
+int main(int argc, char **argv) {
+  ros::init(argc, argv, "enigm_map_saver");
+
+  ros::NodeHandle n;
+  auto service = n.advertiseService("save_map", serviceCallBack);
+
+  ROS_INFO("Ready to save files");
+  ros::spin();
+
+  return 0;
+}

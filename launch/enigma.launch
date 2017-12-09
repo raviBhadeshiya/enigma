@@ -3,10 +3,21 @@
   <arg name="record" default="false"/>
 
   <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch">
-   <arg name="world_file" value="$(find enigma)/world/custom_world"/>
+   <arg name="world_file" value="$(find enigma)/world/custom_world_1"/>
   </include>
 
-  <node name="enigma_node" pkg="enigma" type="enigma_node" output="screen"/>
+  <node name="Enigma_node" pkg="enigma" type="enigma_node" output="screen"/>
+  <!-- <node name="Enigma_map_saver" pkg="enigma" type="enigma_map_saver" output="screen"/> -->
+
+  <include file="$(find enigma)/launch/enigma_mapping.launch"/>
+
+  <!-- Gmapping -->
+  <!-- <include file="$(find turtlebot_navigation)/launch/includes/gmapping/gmapping.launch.xml"/> -->
+  <!-- Move base -->
+  <!-- <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml"/> -->
+
+  <!-- Start frontier_exploration -->
+  <!-- <include file="$(find turtlebot_rviz_launchers)/launch/view_navigation.launch" /> -->
 
   <node name="record" pkg="rosbag" type="record" args="--duration=35.0 -a -x /camera/(.*) -O $(find enigma)/result/walker.bag" if="$(arg record)"/>
 
