@@ -61,10 +61,11 @@ add_message_files(
 )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   fileSave.srv
-# )
+add_service_files(
+  FILES
+  startStop.srv
+  changeSpeed.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -140,9 +141,9 @@ include_directories(include
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 add_executable(${PROJECT_NAME}_node src/enigma_node.cpp src/Enigma.cpp)
-add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}  ${PROJECT_NAME}_generate_messages_cpp)
 add_executable(detection_node src/detection_node.cpp src/Detection.cpp)
-add_dependencies(detection_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(detection_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS}  ${PROJECT_NAME}_generate_messages_cpp)
 # add_executable(enigma_map_saver src/enigma_map_saver.cpp)
 # add_dependencies(enigma_map_saver ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 

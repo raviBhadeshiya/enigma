@@ -1,0 +1,4 @@
+# To start and stop the robot
+bool query
+---
+bool state
