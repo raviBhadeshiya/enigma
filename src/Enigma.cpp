@@ -64,8 +64,7 @@ void Enigma::laserCallback(const sensor_msgs::LaserScan& scan) {
   } else {
     // Else walk straight
     msgs_.linear.x = 0.8;
-    msgs_.angular.z = 0
-    velocity_pub_.publish(msgs_);
+    msgs_.angular.z = 0 velocity_pub_.publish(msgs_);
     ROS_DEBUG("Straight..");
   }
 }
@@ -73,9 +72,12 @@ void Enigma::laserCallback(const sensor_msgs::LaserScan& scan) {
 void Enigma::detectionCallback(const enigma::Detection& msg) {
   green_ = msg.green;
   red_ = msg.red;
+  if (red != 0) {
+    ROS_WARN("!! Anomaly detected !! Object found:%d", red_);
+  }
 }
 // To check is there any obst for collision
-bool Enigma::isObst(const sensor_msgs::LaserScan& scan){
+bool Enigma::isObst(const sensor_msgs::LaserScan& scan) {
   // angle_thresold
   size_t angle_thresold = 25;
   // Dist thresold
