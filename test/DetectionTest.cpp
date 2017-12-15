@@ -24,13 +24,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+// ROS library
 #include <gtest/gtest.h>
 #include <ros/ros.h>
+// Custom library
 #include "enigma/Detection.h"
 #include "enigma/Detection.hpp"
 
+/**
+ * @brief      Struct for service callback helper
+ */
 struct TestHelper {
+  /**
+   * @brief      Construct the object
+   */
   TestHelper() : count(0), red(0), green(0) {}
+  /**
+   * @brief      Simple callBack function
+   *
+   * @param[in]  msg   The message as enigma::Detection
+   */
   void cb(const enigma::Detection& msg) {
     green = msg.green;
     red = msg.red;
@@ -41,14 +54,16 @@ struct TestHelper {
   uint32_t green;
 };
 /**
- * @brief      To test Detection
+ * @brief      To test for Detection
  */
 TEST(TEST_DETECTION, TestOpenCvInit) {
   ros::NodeHandle n_;
   EXPECT_NO_FATAL_FAILURE(Detection test(n_));
   EXPECT_TRUE(1);
 }
-
+/**
+ * @brief      To test the image subscriber is working properly
+ */
 TEST(TEST_DETECTION, TestSubscriber) {
   ros::NodeHandle n_;
   // Should Subscribe by over detection_node
@@ -57,11 +72,13 @@ TEST(TEST_DETECTION, TestSubscriber) {
   ros::WallDuration(0.4).sleep();
   EXPECT_EQ(testingPub.getNumSubscribers(), 1);
 }
-
+/**
+ * @brief      To test the Detection publisher
+ */
 TEST(TEST_DETECTION, TestPublisher) {
   ros::NodeHandle n_;
   TestHelper h;
-  // Detection publisher should subscribe by this
+  // Detection publisher should subscribed by this
   auto test_sub = n_.subscribe("detection", 1, &TestHelper::cb, &h);
 
   ros::WallDuration(2).sleep();
@@ -72,11 +89,13 @@ TEST(TEST_DETECTION, TestPublisher) {
   EXPECT_EQ(h.red, 2);
   EXPECT_EQ(h.green, 1);
 }
-
+/**
+ * @brief      To test the detection method
+ */
 TEST(TEST_DETECTION, TestDetection) {
   ros::NodeHandle n_;
   Detection testDetect(n_);
-
+  // Subscribe the image topic to get it from gazebo world
   auto test_sub = n_.subscribe<sensor_msgs::Image>(
       "/camera/rgb/image_raw", 1, &Detection::imageCallBack, &testDetect);
 
@@ -85,7 +104,7 @@ TEST(TEST_DETECTION, TestDetection) {
 
   cv::Mat testImage;
   int red = 2, green = 1;
-
+  // Check detection is working or not.
   EXPECT_NO_FATAL_FAILURE(testImage = testDetect.getImage());
   EXPECT_EQ(std::get<0>(testDetect.detect(testImage)), red);
   EXPECT_EQ(std::get<1>(testDetect.detect(testImage)), green);

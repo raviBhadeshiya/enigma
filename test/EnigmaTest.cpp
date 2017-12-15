@@ -24,9 +24,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+// ROS library
 #include <gtest/gtest.h>
 #include <ros/ros.h>
+// Cpp library
 #include <memory>
+// Custom library
 #include "enigma/Enigma.hpp"
 /**
  * @brief      To test Enigma
@@ -35,7 +38,9 @@ TEST(TEST_Enigma, TestInit) {
   ros::NodeHandle n_;
   EXPECT_NO_FATAL_FAILURE(Enigma test(n_));
 }
-
+/**
+ * @brief      Test behavior without obst
+ */
 TEST(TEST_Enigma, noObst) {
   // laser scan to provide a fake non-obst:
   size_t num_readings = 50;
@@ -53,11 +58,13 @@ TEST(TEST_Enigma, noObst) {
 
   ros::NodeHandle n_;
   Enigma robot(n_);
-
+  // Should not detect the obst
   EXPECT_FALSE(robot.isObst(scan));
   EXPECT_NO_FATAL_FAILURE(robot.laserCallback(scan));
 }
-
+/**
+ * @brief      Test behavior with obst
+ */
 TEST(TEST_Enigma, obst) {
   // laser scan to provide a fake obst:
   size_t num_readings = 50;
@@ -75,15 +82,18 @@ TEST(TEST_Enigma, obst) {
 
   ros::NodeHandle n_;
   Enigma robot(n_);
-
+  // should detect the obst
   EXPECT_TRUE(robot.isObst(scan));
   EXPECT_NO_FATAL_FAILURE(robot.laserCallback(scan));
 }
-
+/**
+ * @brief      Test detection callback
+ */
 TEST(TEST_Enigma, detecionCB) {
   ros::NodeHandle n_;
   Enigma robot(n_);
   enigma::Detection msg;
   msg.red = 1; msg.green = 2;
+  // Able to process
   EXPECT_NO_FATAL_FAILURE(robot.detectionCallback(msg));
 }

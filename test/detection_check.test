@@ -1,12 +1,11 @@
 <launch>
-
+  <!-- Start headless gazebo env -->
   <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch">
     <arg name="world_file" value="$(find enigma)/world/test_custom"/>
     <arg name="gui" value="0"/>
   </include>
-
+  <!-- Start the detecton node -->
   <node name="detection_node" pkg="enigma" type="detection_node" output="screen"/>
-
+  <!-- Start the test node for testing -->
   <test test-name="Detection_check" pkg="enigma" type="detection_check"/>
-
 </launch>
