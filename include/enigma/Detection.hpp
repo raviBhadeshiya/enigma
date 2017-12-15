@@ -72,22 +72,6 @@ class Detection {
    */
   std::pair<int, int> detect(const cv::Mat& image);
   /**
-   * @brief      postProcessing the image for clearing the noise
-   *
-   * @param[in]  image  The image as cv::Mat
-   *
-   * @return     processed image as cv::Mat
-   */
-  cv::Mat postProcessing(const cv::Mat& image);
-  /**
-   * @brief      Counts the number of blob.
-   *
-   * @param[in]  image  The image as cv::Mat
-   *
-   * @return     Number of blob as int.
-   */
-  int countBlob(const cv::Mat& image);
-  /**
    * @brief      Gets the image.
    *
    * @return     The image as cv::Mat.
@@ -111,4 +95,20 @@ class Detection {
    * @brief      The custom message for detection publisher
    */
   enigma::Detection message;
+  /**
+   * @brief      postProcessing the image for clearing the noise
+   *
+   * @param[in]  image  The image as cv::Mat
+   *
+   * @return     processed image as cv::Mat
+   */
+  cv::Mat postProcessing(const cv::Mat& image);
+  /**
+   * @brief      Counts the number of blob.
+   *
+   * @param[in]  image  The image as cv::Mat
+   *
+   * @return     Number of blob as int.
+   */
+  int countBlob(const cv::Mat& image);
 };

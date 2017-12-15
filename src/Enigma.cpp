@@ -58,13 +58,14 @@ void Enigma::laserCallback(const sensor_msgs::LaserScan& scan) {
   // If any obst detected than turn
   if (isObst(scan)) {
     msgs_.linear.x = 0;
-    msgs_.angular.z = (red != 0) ? 0.7 : -0.7;
+    msgs_.angular.z = -0.7;
     velocity_pub_.publish(msgs_);
     ROS_DEBUG("Obst detected!--> Turnning..");
   } else {
     // Else walk straight
     msgs_.linear.x = 0.8;
-    msgs_.angular.z = 0 velocity_pub_.publish(msgs_);
+    msgs_.angular.z = 0;
+    velocity_pub_.publish(msgs_);
     ROS_DEBUG("Straight..");
   }
 }
@@ -72,7 +73,7 @@ void Enigma::laserCallback(const sensor_msgs::LaserScan& scan) {
 void Enigma::detectionCallback(const enigma::Detection& msg) {
   green_ = msg.green;
   red_ = msg.red;
-  if (red != 0) {
+  if (red_ != 0) {
     ROS_WARN("!! Anomaly detected !! Object found:%d", red_);
   }
 }
