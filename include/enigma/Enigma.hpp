@@ -30,6 +30,9 @@
 #include <geometry_msgs/Twist.h>
 #include <ros/ros.h>
 #include <sensor_msgs/LaserScan.h>
+// Custom service library
+#include <enigma/changeSpeed.h>
+#include <enigma/startStop.h>
 // Cpp library
 #include <cmath>
 /**
@@ -56,13 +59,13 @@ class Enigma {
    *
    * @param[in]  scan  The scan as sensor_msgs::LaserScan
    */
-  void laserCallback(const sensor_msgs::LaserScan& scan);
+  void laserCallback(const sensor_msgs::LaserScan &scan);
   /**
    * @brief      Detection callback for getting the object count
    *
    * @param[in]  msg   The message as enigma::Detection
    */
-  void detectionCallback(const enigma::Detection& msg);
+  void detectionCallback(const enigma::Detection &msg);
   /**
    * @brief      Determines if any obst for sensor_msgs::LaserScan
    *
@@ -70,7 +73,27 @@ class Enigma {
    *
    * @return     True if any obst detected, False otherwise.
    */
-  bool isObst(const sensor_msgs::LaserScan& scan);
+  bool isObst(const sensor_msgs::LaserScan &scan);
+  /**
+   * @brief      Speed change service callback
+   *
+   * @param      req   The request as float
+   * @param      res   The response as bool
+   *
+   * @return     True if worked
+   */
+  bool speedServiceCB(enigma::changeSpeed::Request &req,
+                      enigma::changeSpeed::Response &res);
+  /**
+   * @brief      Start stop service callback
+   *
+   * @param      req   The request as bool
+   * @param      res   The resource as bool
+   *
+   * @return     True if worked
+   */
+  bool switchServiceCB(enigma::startStop::Request &req,
+                       enigma::startStop::Response &res);
 
  private:
   /**
@@ -86,7 +109,23 @@ class Enigma {
    */
   ros::Publisher velocity_pub_;
   /**
+   * @brief      The start stop service server
+   */
+  ros::ServiceServer switchServer_;
+  /**
+   * @brief      The speed change service sever
+   */
+  ros::ServiceServer speedServer_;
+  /**
    * @brief      The object counter for green and red object.
    */
   int red_ = 0, green_ = 0;
+  /**
+   * @brief      The maxSpeed as float for robot to run
+   */
+  float maxSpeed_ = 0.8;
+  /**
+   * @brief      The bool switch for robot to start and stop
+   */
+  bool switch_ = false;
 };

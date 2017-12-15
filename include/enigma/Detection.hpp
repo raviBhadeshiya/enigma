@@ -34,6 +34,8 @@
 #include <cv_bridge/cv_bridge.h>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
+// Custom service library
+#include <enigma/startStop.h>
 // Cpp library
 #include <iostream>
 #include <utility>
@@ -77,6 +79,16 @@ class Detection {
    * @return     The image as cv::Mat.
    */
   cv::Mat getImage();
+  /**
+   * @brief      Start stop service callback
+   *
+   * @param      req   The request as bool
+   * @param      res   The resource as bool
+   *
+   * @return     True if worked
+   */
+  bool switchServiceCB(enigma::startStop::Request &req,
+                       enigma::startStop::Response &res);
 
  private:
   /**
@@ -91,6 +103,10 @@ class Detection {
    * @brief      The detection publisher for /detection
    */
   ros::Publisher detection_pub_;
+  /**
+   * @brief      The start stop service server
+   */
+  ros::ServiceServer switchServer_;
   /**
    * @brief      The custom message for detection publisher
    */
@@ -111,4 +127,8 @@ class Detection {
    * @return     Number of blob as int.
    */
   int countBlob(const cv::Mat& image);
+  /**
+   * @brief      The bool switch start and stopping the detection
+   */
+  bool switch_ = true;
 };

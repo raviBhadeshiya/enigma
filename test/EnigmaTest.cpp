@@ -31,6 +31,9 @@
 #include <memory>
 // Custom library
 #include "enigma/Enigma.hpp"
+#include "enigma/changeSpeed.h"
+#include "enigma/startStop.h"
+
 /**
  * @brief      To test Enigma
  */
@@ -96,4 +99,50 @@ TEST(TEST_Enigma, detecionCB) {
   msg.red = 1; msg.green = 2;
   // Able to process
   EXPECT_NO_FATAL_FAILURE(robot.detectionCallback(msg));
+}
+/**
+ * @brief      Test robot start and stop service
+ */
+TEST(TEST_Enigma, TestSwitchService) {
+  ros::NodeHandle n_;
+   Enigma robot(n_);
+
+  auto client = n_.serviceClient<enigma::startStop>("robotSwitch");
+
+  bool exists(client.waitForExistence(ros::Duration(10)));
+  EXPECT_TRUE(exists);
+
+  // Check service and response
+  enigma::startStop srv;
+  srv.request.query = false;
+  EXPECT_TRUE(robot.switchServiceCB(srv.request, srv.response));
+  EXPECT_FALSE(srv.response.state);
+
+  srv.request.query = true;
+  EXPECT_TRUE(robot.switchServiceCB(srv.request, srv.response));
+  EXPECT_TRUE(srv.response.state);
+}
+/**
+ * @brief      Test robot speed change service
+ */
+
+TEST(TEST_Enigma, TestSpeedService) {
+  ros::NodeHandle n_;
+   Enigma robot(n_);
+
+  auto client = n_.serviceClient<enigma::startStop>("robotSpeed");
+
+  bool exists(client.waitForExistence(ros::Duration(10)));
+  EXPECT_TRUE(exists);
+
+  // Check service and response
+  enigma::changeSpeed srv;
+  // invalid request more than 1.0
+  srv.request.speed = 1.1;
+  EXPECT_FALSE(robot.speedServiceCB(srv.request, srv.response));
+  EXPECT_FALSE(srv.response.success);
+  // valid request
+  srv.request.speed = 0.8;
+  EXPECT_TRUE(robot.speedServiceCB(srv.request, srv.response));
+  EXPECT_TRUE(srv.response.success);
 }

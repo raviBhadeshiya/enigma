@@ -9,6 +9,8 @@
 
   <node name="Enigma_node" pkg="enigma" type="enigma_node" output="screen"/>
 
+  <node name="Detection_node" pkg="enigma" type="detection_node" output="screen"/>
+
   <include file="$(find enigma)/launch/enigma_mapping.launch"/>
 
   <!-- Gmapping -->
@@ -19,6 +21,6 @@
   <!-- Start frontier_exploration -->
   <!-- <include file="$(find turtlebot_rviz_launchers)/launch/view_navigation.launch" /> -->
 
-  <node name="record" pkg="rosbag" type="record" args="--duration=35.0 -a -x /camera/(.*) -O $(find enigma)/result/walker.bag" if="$(arg record)"/>
+  <node name="record" pkg="rosbag" type="record" args="--duration=35.0 -a -x /camera/(.*) -O $(find enigma)/result/enigma.bag" if="$(arg record)"/>
 
 </launch>

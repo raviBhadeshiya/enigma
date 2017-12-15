@@ -36,12 +36,19 @@ Detection::Detection(ros::NodeHandle n) {
   // Init the subscriber
   image_sub_ = n.subscribe<sensor_msgs::Image>("/camera/rgb/image_raw", 10,
                                                &Detection::imageCallBack, this);
+  // Service
+  switchServer_ =
+      n.advertiseService("detectionSwitch", &Detection::switchServiceCB, this);
+
   // Init the detection
   detection_pub_ = n.advertise<enigma::Detection>("detection", 10);
+
+  // cv::namedWindow("Debug");
 }
 
-Detection::~Detection() {}
-
+Detection::~Detection() {
+  // cv::destroyWindow("Debug");
+}
 void Detection::imageCallBack(const sensor_msgs::ImageConstPtr &msg) {
   //  Convert the ros image for cv image
   try {
@@ -50,17 +57,19 @@ void Detection::imageCallBack(const sensor_msgs::ImageConstPtr &msg) {
     ROS_ERROR("cv_bridge exception: %s", e.what());
     return;
   }
+  // Detection state switch
+  if (!switch_) return;
   // Init the var
   int red = 0, green = 0;
   // auto [red, green] = detect(cv_ptr->image);
   std::tie(red, green) = detect(cv_ptr->image);
-  message.red = red; message.green = green;
+  message.red = red;
+  message.green = green;
   // publish the message
   detection_pub_.publish(message);
 }
 // Detecting the cylinders for image.
 std::pair<int, int> Detection::detect(const cv::Mat &image) {
-
   cv::Mat hsv_image;
   // Convert the image to hsv space
   cv::cvtColor(image, hsv_image, CV_BGR2HSV);
@@ -70,13 +79,16 @@ std::pair<int, int> Detection::detect(const cv::Mat &image) {
   cv::inRange(hsv_image, cv::Scalar(0, 110, 0), cv::Scalar(50, 255, 255),
               redImgThresholded);  // Threshold the image
   redImgThresholded = postProcessing(redImgThresholded);
+
+  // cv::imshow("Debug", redImgThresholded);   ;
+  // cv::waitKey(3);
+
   // Threshold for green image
   cv::inRange(hsv_image, cv::Scalar(20, 110, 0), cv::Scalar(179, 255, 255),
               greenImgThresholded);  // Threshold the image
   greenImgThresholded = postProcessing(greenImgThresholded);
   // Count the blob for detecting cylinder.
-  return std::make_pair(countBlob(redImgThresholded),
-                        countBlob(greenImgThresholded));
+  return std::make_pair(countBlob(redImgThresholded),countBlob(greenImgThresholded));
 }
 
 cv::Mat Detection::postProcessing(const cv::Mat &image) {
@@ -105,9 +117,35 @@ int Detection::countBlob(const cv::Mat &image) {
   // find the objects contour
   cv::findContours(image, contours, hierarchy, CV_RETR_CCOMP,
                    CV_CHAIN_APPROX_SIMPLE);  // Find the contours in the image
+
+  // if (contours.size() == 0) return 0;
+
+  // for (int i = 0; i < contours.size(); i++) {  // iterate through each
+  // contour.
+  //   drawContours(
+  //       cv_ptr->image, contours, i, cv::Scalar(255), 4, 8,
+  //       hierarchy);  // Draw the largest contour using previously stored
+  //       index.
+  // }
+
+  // cv::imshow("Debug", cv_ptr->image);
+  // cv::waitKey(3);
+
   return contours.size();
 }
 // Getting images
-cv::Mat Detection::getImage() {
-  return cv_ptr->image;
+cv::Mat Detection::getImage() { return cv_ptr->image; }
+
+bool Detection::switchServiceCB(enigma::startStop::Request &req,
+                                enigma::startStop::Response &res) {
+  switch_ = req.query;
+
+  if (switch_) {
+    ROS_INFO("Detection is starting!");
+    res.state = true;
+  } else {
+    ROS_INFO("Detection is stopping!");
+    res.state = false;
+  }
+  return true;
 }

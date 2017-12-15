@@ -27,9 +27,11 @@
 // ROS library
 #include <gtest/gtest.h>
 #include <ros/ros.h>
+#include <ros/service_client.h>
 // Custom library
 #include "enigma/Detection.h"
 #include "enigma/Detection.hpp"
+#include "enigma/startStop.h"
 
 /**
  * @brief      Struct for service callback helper
@@ -109,3 +111,27 @@ TEST(TEST_DETECTION, TestDetection) {
   EXPECT_EQ(std::get<0>(testDetect.detect(testImage)), red);
   EXPECT_EQ(std::get<1>(testDetect.detect(testImage)), green);
 }
+
+/**
+ * @brief      Test detection start and stop service
+ */
+TEST(TEST_DETECTION, TestSwitchService) {
+  ros::NodeHandle n_;
+  Detection testDetect(n_);
+
+  auto client = n_.serviceClient<enigma::startStop>("detectionSwitch");
+
+  bool exists(client.waitForExistence(ros::Duration(10)));
+  EXPECT_TRUE(exists);
+
+  // Check service and response
+  enigma::startStop srv;
+  srv.request.query = false;
+  EXPECT_TRUE(testDetect.switchServiceCB(srv.request, srv.response));
+  EXPECT_FALSE(srv.response.state);
+
+  srv.request.query = true;
+  EXPECT_TRUE(testDetect.switchServiceCB(srv.request, srv.response));
+  EXPECT_TRUE(srv.response.state);
+}
+
