@@ -3,7 +3,7 @@
  * @file Detection.hpp
  * @author     Ravi Bhadeshiya
  * @version    1.0
- * @brief      Threat Detection Class
+ * @brief      Anomaly detection class
  *
  * @copyright  MIT License (c) 2017 Ravi Bhadeshiya
  *
@@ -25,31 +25,90 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+
+// ROS library
+#include <enigma/Detection.h>
 #include <ros/ros.h>
 #include <sensor_msgs/image_encodings.h>
-#include <enigma/Detection.h>
-
+// OpenCv library
+#include <cv_bridge/cv_bridge.h>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-#include <cv_bridge/cv_bridge.h>
-
+// Cpp library
+#include <iostream>
 #include <utility>
 #include <vector>
-#include <iostream>
-
+/**
+ * @brief      Class for detection.
+ */
 class Detection {
  public:
+  /**
+   * @brief      Constructor for Detection.
+   */
   Detection();
+  /**
+   * @brief      Overloaded Constructor for Detection.
+   *
+   * @param[in]  n     as ros::NodeHandle
+   */
   explicit Detection(ros::NodeHandle n);
+  /**
+   * @brief      Destroys the Detecion.
+   */
   ~Detection();
+  /**
+   * @brief      Image callBack for turtlebot camera
+   *
+   * @param[in]  msg   The message as sensor_mags::ImageConstPtr
+   */
   void imageCallBack(const sensor_msgs::ImageConstPtr& msg);
+  /**
+   * @brief      The simple function for detecting the red and green objects
+   *
+   * @param[in]  image  The image as cv::Mat
+   *
+   * @return     objects count as pair<red=int, green=int>>
+   */
   std::pair<int, int> detect(const cv::Mat& image);
+  /**
+   * @brief      postProcessing the image for clearing the noise
+   *
+   * @param[in]  image  The image as cv::Mat
+   *
+   * @return     processed image as cv::Mat
+   */
   cv::Mat postProcessing(const cv::Mat& image);
+  /**
+   * @brief      Counts the number of blob.
+   *
+   * @param[in]  image  The image as cv::Mat
+   *
+   * @return     Number of blob as int.
+   */
   int countBlob(const cv::Mat& image);
+  /**
+   * @brief      Gets the image.
+   *
+   * @return     The image as cv::Mat.
+   */
   cv::Mat getImage();
+
  private:
+  /**
+   * @brief     cv_ptr as cv_bridge::CvImagePtr for converting ros image.
+   */
   cv_bridge::CvImagePtr cv_ptr;
+  /**
+   * @brief      The image subscriber for /camera/rgb/image_raw topic.
+   */
   ros::Subscriber image_sub_;
+  /**
+   * @brief      The detection publisher for /detection
+   */
   ros::Publisher detection_pub_;
+  /**
+   * @brief      The custom message for detection publisher
+   */
   enigma::Detection message;
 };

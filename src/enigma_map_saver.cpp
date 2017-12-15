@@ -24,39 +24,45 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
+// ROS library
+#include <enigma/fileSave.h>
+#include <ros/ros.h>
+// System library
 #include <unistd.h>
+// Cpp library
 #include <string>
-#include "enigma/fileSave.h"
-#include "ros/ros.h"
-
+/**
+ * @brief      The serviceCallBack for service
+ *
+ * @param      req   The request as nothing
+ * @param      res   The response as bool
+ *
+ * @return     return true
+ */
 bool serviceCallBack(enigma::fileSave::Request &req,
                      enigma::fileSave::Response &res) {
   char *name[4];
   res.check = false;
-
   name[0] = "/bin/bash";
   name[1] = "-c";
   // rosrun octomap_saver octomap_saver -f /tmp/temp.ot
   // std::string file = "rosrun octomap_saver octomap_saver -f /tmp/" +
-  name[2] = "rosrun octomap_server octomap_saver -f $(rospack find enigma)/map/enigma_map.ot";
+  name[2] =
+      "rosrun octomap_server octomap_saver -f $(rospack find "
+      "enigma)/map/enigma_map.ot";
   // name[2] = "roslaunch enigma enigma_map_saver.launch";
   name[3] = NULL;
   res.check = true;
-  execvp(name[0], name);
-
   ROS_INFO("Map saved\n");
+  execvp(name[0], name);
   return true;
 }
 
 int main(int argc, char **argv) {
   ros::init(argc, argv, "enigm_map_saver");
-
   ros::NodeHandle n;
   auto service = n.advertiseService("save_map", serviceCallBack);
-
   ROS_INFO("Ready to save files");
   ros::spin();
-
   return 0;
 }

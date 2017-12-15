@@ -25,23 +25,68 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
+// ROS library
+#include <enigma/Detection.h>
 #include <geometry_msgs/Twist.h>
 #include <ros/ros.h>
 #include <sensor_msgs/LaserScan.h>
+// Cpp library
 #include <cmath>
-#include "enigma/Detection.h"
-
+/**
+ * @brief      Class for enigma for robot behavior
+ */
 class Enigma {
  public:
-    Enigma();
-    explicit Enigma(ros::NodeHandle n_);
-    ~Enigma();
-    void laserCallback(const sensor_msgs::LaserScan& scan);
-    void detectionCallback(const enigma::Detection& msg);
-    bool isObst(const sensor_msgs::LaserScan& scan);
+  /**
+   * @brief      Constructor for Enigma.
+   */
+  Enigma();
+  /**
+   * @brief      Overloaded Constructor for Enigma
+   *
+   * @param[in]  n_    as ros::NodeHandle
+   */
+  explicit Enigma(ros::NodeHandle n_);
+  /**
+   * @brief      Destroys the object.
+   */
+  ~Enigma();
+  /**
+   * @brief      Laser callback for turtlebot laser sensor
+   *
+   * @param[in]  scan  The scan as sensor_msgs::LaserScan
+   */
+  void laserCallback(const sensor_msgs::LaserScan& scan);
+  /**
+   * @brief      Detection callback for getting the object count
+   *
+   * @param[in]  msg   The message as enigma::Detection
+   */
+  void detectionCallback(const enigma::Detection& msg);
+  /**
+   * @brief      Determines if any obst for sensor_msgs::LaserScan
+   *
+   * @param[in]  scan  The scan as sensor_msgs::LaserScan
+   *
+   * @return     True if any obst detected, False otherwise.
+   */
+  bool isObst(const sensor_msgs::LaserScan& scan);
+
  private:
-    geometry_msgs::Twist msgs_;
-    ros::Subscriber laser_sub_;
-    ros::Publisher velocity_pub_;
-    int red_ = 0, green_ = 0;
+  /**
+   * @brief      mags_ as geometry_msgs::Twist
+   */
+  geometry_msgs::Twist msgs_;
+  /**
+   * @brief      laser_sub_ as ros::Subscriber
+   */
+  ros::Subscriber laser_sub_;
+  /**
+   * @brief      velocity_pub_ as ros::Publisher
+   */
+  ros::Publisher velocity_pub_;
+  /**
+   * @brief      The object counter for green and red object.
+   */
+  int red_ = 0, green_ = 0;
 };

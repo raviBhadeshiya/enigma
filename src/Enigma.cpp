@@ -25,22 +25,24 @@
  * SOFTWARE.
  */
 #include "enigma/Enigma.hpp"
-
+// Constructor for Enigma
 Enigma::Enigma() {}
-
+// Overloaded Constructor for Enigma
 Enigma::Enigma(ros::NodeHandle n_) {
+  // Velocity publisher for turtlebot
   velocity_pub_ =
       n_.advertise<geometry_msgs::Twist>("cmd_vel_mux/input/navi", 10);
-
+  // Laser message subscribe
   laser_sub_ = n_.subscribe("/scan", 10, &Enigma::laserCallback, this);
   // Reset the the velocity
   msgs_.linear.x = 0;
   msgs_.angular.z = 0;
+  // Publisher the stop msg_ first
   velocity_pub_.publish(msgs_);
 
   ROS_INFO("Enigma init successfully..");
 }
-
+// Destroys the object
 Enigma::~Enigma() {
   ROS_INFO("Turtlebot walker is shutting down..");
   // On Destruction stop the robot
@@ -48,39 +50,42 @@ Enigma::~Enigma() {
   msgs_.angular.z = 0;
   velocity_pub_.publish(msgs_);
 }
-
+// laserCallback for exploratory behavior
 void Enigma::laserCallback(const sensor_msgs::LaserScan& scan) {
   ROS_DEBUG("LaserCallback called!");
   // If obst is nearby go to turning behavior
 
+  // If any obst detected than turn
   if (isObst(scan)) {
     msgs_.linear.x = 0;
     msgs_.angular.z = (red != 0) ? 0.7 : -0.7;
     velocity_pub_.publish(msgs_);
-    ROS_WARN("Obst detected!--> Turnning..");
+    ROS_DEBUG("Obst detected!--> Turnning..");
   } else {
     // Else walk straight
     msgs_.linear.x = 0.8;
-    msgs_.angular.z = 0;
+    msgs_.angular.z = 0
     velocity_pub_.publish(msgs_);
     ROS_DEBUG("Straight..");
   }
 }
-
+// Detection callback for getting data
 void Enigma::detectionCallback(const enigma::Detection& msg) {
   green_ = msg.green;
   red_ = msg.red;
 }
-
+// To check is there any obst for collision
 bool Enigma::isObst(const sensor_msgs::LaserScan& scan){
+  // angle_thresold
   size_t angle_thresold = 25;
+  // Dist thresold
   double dist_thresold = 1.5;
-
+  // Find the range based on thresold
   size_t range =
       std::round(angle_thresold * (M_PI / 180) / scan.angle_increment);
   size_t size = scan.ranges.size() / 2;
   size_t count = 0;
-
+  // Logic for any obst
   for (const auto& itr : scan.ranges) {
     // scan->range_min is 0.45
     if (!(count < (size - range) || count > (size + range))) {
