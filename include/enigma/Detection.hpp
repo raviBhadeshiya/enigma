@@ -26,20 +26,18 @@
  * SOFTWARE.
  */
 
-// ROS library
-#include <enigma/Detection.h>
+#include <cv_bridge/cv_bridge.h>
 #include <ros/ros.h>
 #include <sensor_msgs/image_encodings.h>
-// OpenCv library
-#include <cv_bridge/cv_bridge.h>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-// Custom service library
-#include <enigma/startStop.h>
-// Cpp library
 #include <iostream>
 #include <utility>
 #include <vector>
+// opencv header
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc/imgproc.hpp>
+
+#include "enigma/Detection.h"
+#include "enigma/startStop.h"
 /**
  * @brief      Class for detection.
  */
@@ -87,8 +85,8 @@ class Detection {
    *
    * @return     True if worked
    */
-  bool switchServiceCB(enigma::startStop::Request &req,
-                       enigma::startStop::Response &res);
+  bool switchServiceCB(enigma::startStop::Request& req,
+                       enigma::startStop::Response& res);
 
  private:
   /**

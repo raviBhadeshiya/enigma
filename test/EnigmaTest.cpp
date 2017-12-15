@@ -49,10 +49,12 @@ TEST(TEST_Enigma, noObst) {
   size_t num_readings = 50;
 
   sensor_msgs::LaserScan scan;
-  scan.angle_min = -1.57; scan.angle_max = 1.57;
+  scan.angle_min = -1.57;
+  scan.angle_max = 1.57;
   scan.angle_increment = 3.14 / num_readings;
   scan.time_increment = (1 / 40) / (num_readings);
-  scan.range_min = 0.0; scan.range_max = 100.0;
+  scan.range_min = 0.0;
+  scan.range_max = 100.0;
   scan.ranges.resize(num_readings);
   scan.intensities.resize(num_readings);
   for (auto& i : scan.ranges) {
@@ -73,10 +75,12 @@ TEST(TEST_Enigma, obst) {
   size_t num_readings = 50;
 
   sensor_msgs::LaserScan scan;
-  scan.angle_min = -1.57; scan.angle_max = 1.57;
+  scan.angle_min = -1.57;
+  scan.angle_max = 1.57;
   scan.angle_increment = 3.14 / num_readings;
   scan.time_increment = (1 / 40) / (num_readings);
-  scan.range_min = 0.0; scan.range_max = 100.0;
+  scan.range_min = 0.0;
+  scan.range_max = 100.0;
   scan.ranges.resize(num_readings);
   scan.intensities.resize(num_readings);
   for (auto& i : scan.ranges) {
@@ -96,7 +100,8 @@ TEST(TEST_Enigma, detecionCB) {
   ros::NodeHandle n_;
   Enigma robot(n_);
   enigma::Detection msg;
-  msg.red = 1; msg.green = 2;
+  msg.red = 1;
+  msg.green = 2;
   // Able to process
   EXPECT_NO_FATAL_FAILURE(robot.detectionCallback(msg));
 }
@@ -105,7 +110,7 @@ TEST(TEST_Enigma, detecionCB) {
  */
 TEST(TEST_Enigma, TestSwitchService) {
   ros::NodeHandle n_;
-   Enigma robot(n_);
+  Enigma robot(n_);
 
   auto client = n_.serviceClient<enigma::startStop>("robotSwitch");
 
@@ -128,7 +133,7 @@ TEST(TEST_Enigma, TestSwitchService) {
 
 TEST(TEST_Enigma, TestSpeedService) {
   ros::NodeHandle n_;
-   Enigma robot(n_);
+  Enigma robot(n_);
 
   auto client = n_.serviceClient<enigma::startStop>("robotSpeed");
 

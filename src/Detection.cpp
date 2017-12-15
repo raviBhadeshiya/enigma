@@ -88,7 +88,8 @@ std::pair<int, int> Detection::detect(const cv::Mat &image) {
               greenImgThresholded);  // Threshold the image
   greenImgThresholded = postProcessing(greenImgThresholded);
   // Count the blob for detecting cylinder.
-  return std::make_pair(countBlob(redImgThresholded),countBlob(greenImgThresholded));
+  return std::make_pair(countBlob(redImgThresholded),
+                        countBlob(greenImgThresholded));
 }
 
 cv::Mat Detection::postProcessing(const cv::Mat &image) {

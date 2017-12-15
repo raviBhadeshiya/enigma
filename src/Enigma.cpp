@@ -36,8 +36,10 @@ Enigma::Enigma(ros::NodeHandle n_) {
   laser_sub_ = n_.subscribe("/scan", 10, &Enigma::laserCallback, this);
 
   // Service
-  switchServer_ = n_.advertiseService("robotSwitch", &Enigma::switchServiceCB, this);
-  speedServer_ = n_.advertiseService("robotSpeed", &Enigma::speedServiceCB, this);
+  switchServer_ =
+      n_.advertiseService("robotSwitch", &Enigma::switchServiceCB, this);
+  speedServer_ =
+      n_.advertiseService("robotSpeed", &Enigma::speedServiceCB, this);
   // Reset the the velocity
   msgs_.linear.x = 0;
   msgs_.angular.z = 0;
@@ -86,8 +88,8 @@ void Enigma::detectionCallback(const enigma::Detection& msg) {
   red_ = msg.red;
   if (red_ != 0 || green_ != 0) {
     ROS_INFO(
-        "!! Anomaly detected !! Red Object found:%d and Green Object found:%d",
-        red_, green_);
+      "Anomaly detected!!Red Object found:%d and Green Object found:%d",
+             red_, green_);
   }
 }
 // To check is there any obst for collision

@@ -1,0 +1,17 @@
+ravib@Inspiron-7559:~/catkin_ws/src/enigma$ cpplint $( find . -name \*.hpp -or -name \*.cpp | grep -vE -e "^./build/" -e "^./vendor/" -e "^./docs/" -e "^./results" )
+Done processing ./test/DetectionTest.cpp
+Done processing ./test/enigma_test_node.cpp
+Done processing ./test/EnigmaTest.cpp
+./include/enigma/Detection.hpp:88:  Is this a non-const reference? If so, make const or use a pointer: enigma::startStop::Request& req  [runtime/references] [2]
+./include/enigma/Detection.hpp:89:  Is this a non-const reference? If so, make const or use a pointer: enigma::startStop::Response& res  [runtime/references] [2]
+Done processing ./include/enigma/Detection.hpp
+./include/enigma/Enigma.hpp:85:  Is this a non-const reference? If so, make const or use a pointer: enigma::changeSpeed::Request &req  [runtime/references] [2]
+./include/enigma/Enigma.hpp:86:  Is this a non-const reference? If so, make const or use a pointer: enigma::changeSpeed::Response &res  [runtime/references] [2]
+./include/enigma/Enigma.hpp:95:  Is this a non-const reference? If so, make const or use a pointer: enigma::startStop::Request &req  [runtime/references] [2]
+./include/enigma/Enigma.hpp:96:  Is this a non-const reference? If so, make const or use a pointer: enigma::startStop::Response &res  [runtime/references] [2]
+Done processing ./include/enigma/Enigma.hpp
+Done processing ./src/detection_node.cpp
+Done processing ./src/Enigma.cpp
+Done processing ./src/Detection.cpp
+Done processing ./src/enigma_node.cpp
+Total errors found: 6
