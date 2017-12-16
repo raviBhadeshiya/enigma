@@ -1,0 +1,150 @@
+\hypertarget{class_detection}{}\section{Detection Class Reference}
+\label{class_detection}\index{Detection@{Detection}}
+
+
+Class for detection.  
+
+
+
+
+{\ttfamily \#include $<$Detection.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_detection_a86e6ebf5a660a29e78ee7a7f08292260}\label{class_detection_a86e6ebf5a660a29e78ee7a7f08292260}} 
+\hyperlink{class_detection_a86e6ebf5a660a29e78ee7a7f08292260}{Detection} ()
+\begin{DoxyCompactList}\small\item\em Constructor for \hyperlink{class_detection}{Detection}. \end{DoxyCompactList}\item 
+\hyperlink{class_detection_a98a60038a268baf116cd3faeda086244}{Detection} (ros\+::\+Node\+Handle n)
+\begin{DoxyCompactList}\small\item\em Overloaded Constructor for \hyperlink{class_detection}{Detection}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_detection_abbfdeb60a10132d820fcd20dd292e400}\label{class_detection_abbfdeb60a10132d820fcd20dd292e400}} 
+\hyperlink{class_detection_abbfdeb60a10132d820fcd20dd292e400}{$\sim$\+Detection} ()
+\begin{DoxyCompactList}\small\item\em Destroys the Detecion. \end{DoxyCompactList}\item 
+void \hyperlink{class_detection_a1d21be46013c15983191c1bb0835e205}{image\+Call\+Back} (const sensor\+\_\+msgs\+::\+Image\+Const\+Ptr \&msg)
+\begin{DoxyCompactList}\small\item\em Image call\+Back for turtlebot camera. \end{DoxyCompactList}\item 
+std\+::pair$<$ int, int $>$ \hyperlink{class_detection_a8a2edcc8953e1497993d06ab51d36e64}{detect} (const cv\+::\+Mat \&image)
+\begin{DoxyCompactList}\small\item\em The simple function for detecting the red and green objects. \end{DoxyCompactList}\item 
+cv\+::\+Mat \hyperlink{class_detection_a8b1151044c2c6bc28c2aeacb808cfd4d}{get\+Image} ()
+\begin{DoxyCompactList}\small\item\em Gets the image. \end{DoxyCompactList}\item 
+bool \hyperlink{class_detection_a8a843a92cb338bd139126f23f230938d}{switch\+Service\+CB} (enigma\+::start\+Stop\+::\+Request \&req, enigma\+::start\+Stop\+::\+Response \&res)
+\begin{DoxyCompactList}\small\item\em Start stop service callback. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class for detection. 
+
+Definition at line 44 of file Detection.\+hpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_detection_a98a60038a268baf116cd3faeda086244}\label{class_detection_a98a60038a268baf116cd3faeda086244}} 
+\index{Detection@{Detection}!Detection@{Detection}}
+\index{Detection@{Detection}!Detection@{Detection}}
+\subsubsection{\texorpdfstring{Detection()}{Detection()}}
+{\footnotesize\ttfamily Detection\+::\+Detection (\begin{DoxyParamCaption}\item[{ros\+::\+Node\+Handle}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Overloaded Constructor for \hyperlink{class_detection}{Detection}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em n} & as ros\+::\+Node\+Handle \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 34 of file Detection.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_detection_a8a2edcc8953e1497993d06ab51d36e64}\label{class_detection_a8a2edcc8953e1497993d06ab51d36e64}} 
+\index{Detection@{Detection}!detect@{detect}}
+\index{detect@{detect}!Detection@{Detection}}
+\subsubsection{\texorpdfstring{detect()}{detect()}}
+{\footnotesize\ttfamily std\+::pair$<$ int, int $>$ Detection\+::detect (\begin{DoxyParamCaption}\item[{const cv\+::\+Mat \&}]{image }\end{DoxyParamCaption})}
+
+
+
+The simple function for detecting the red and green objects. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em image} & The image as cv\+::\+Mat\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+objects count as pair$<$red=int, green=int$>$$>$ 
+\end{DoxyReturn}
+
+
+Definition at line 72 of file Detection.\+cpp.
+
+\mbox{\Hypertarget{class_detection_a8b1151044c2c6bc28c2aeacb808cfd4d}\label{class_detection_a8b1151044c2c6bc28c2aeacb808cfd4d}} 
+\index{Detection@{Detection}!get\+Image@{get\+Image}}
+\index{get\+Image@{get\+Image}!Detection@{Detection}}
+\subsubsection{\texorpdfstring{get\+Image()}{getImage()}}
+{\footnotesize\ttfamily cv\+::\+Mat Detection\+::get\+Image (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the image. 
+
+\begin{DoxyReturn}{Returns}
+The image as cv\+::\+Mat. 
+\end{DoxyReturn}
+
+
+Definition at line 138 of file Detection.\+cpp.
+
+\mbox{\Hypertarget{class_detection_a1d21be46013c15983191c1bb0835e205}\label{class_detection_a1d21be46013c15983191c1bb0835e205}} 
+\index{Detection@{Detection}!image\+Call\+Back@{image\+Call\+Back}}
+\index{image\+Call\+Back@{image\+Call\+Back}!Detection@{Detection}}
+\subsubsection{\texorpdfstring{image\+Call\+Back()}{imageCallBack()}}
+{\footnotesize\ttfamily void Detection\+::image\+Call\+Back (\begin{DoxyParamCaption}\item[{const sensor\+\_\+msgs\+::\+Image\+Const\+Ptr \&}]{msg }\end{DoxyParamCaption})}
+
+
+
+Image call\+Back for turtlebot camera. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em msg} & The message as sensor\+\_\+mags\+::\+Image\+Const\+Ptr \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 52 of file Detection.\+cpp.
+
+\mbox{\Hypertarget{class_detection_a8a843a92cb338bd139126f23f230938d}\label{class_detection_a8a843a92cb338bd139126f23f230938d}} 
+\index{Detection@{Detection}!switch\+Service\+CB@{switch\+Service\+CB}}
+\index{switch\+Service\+CB@{switch\+Service\+CB}!Detection@{Detection}}
+\subsubsection{\texorpdfstring{switch\+Service\+C\+B()}{switchServiceCB()}}
+{\footnotesize\ttfamily bool Detection\+::switch\+Service\+CB (\begin{DoxyParamCaption}\item[{enigma\+::start\+Stop\+::\+Request \&}]{req,  }\item[{enigma\+::start\+Stop\+::\+Response \&}]{res }\end{DoxyParamCaption})}
+
+
+
+Start stop service callback. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em req} & The request as bool \\
+\hline
+{\em res} & The resource as bool\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if worked 
+\end{DoxyReturn}
+
+
+Definition at line 140 of file Detection.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/ravib/catkin\+\_\+ws/src/enigma/include/enigma/\hyperlink{_detection_8hpp}{Detection.\+hpp}\item 
+/home/ravib/catkin\+\_\+ws/src/enigma/src/\hyperlink{_detection_8cpp}{Detection.\+cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,178 @@
+\hypertarget{class_enigma}{}\section{Enigma Class Reference}
+\label{class_enigma}\index{Enigma@{Enigma}}
+
+
+Class for enigma for robot behavior.  
+
+
+
+
+{\ttfamily \#include $<$Enigma.\+hpp$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_enigma_acae81b22dbb4a98e7f3e7743f3564d0e}\label{class_enigma_acae81b22dbb4a98e7f3e7743f3564d0e}} 
+\hyperlink{class_enigma_acae81b22dbb4a98e7f3e7743f3564d0e}{Enigma} ()
+\begin{DoxyCompactList}\small\item\em Constructor for \hyperlink{class_enigma}{Enigma}. \end{DoxyCompactList}\item 
+\hyperlink{class_enigma_a10f3e8731f96cb675c04cdac4dfb978a}{Enigma} (ros\+::\+Node\+Handle n\+\_\+)
+\begin{DoxyCompactList}\small\item\em Overloaded Constructor for \hyperlink{class_enigma}{Enigma}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_enigma_ae4d3772430a6dc15583ae913f3d65770}\label{class_enigma_ae4d3772430a6dc15583ae913f3d65770}} 
+\hyperlink{class_enigma_ae4d3772430a6dc15583ae913f3d65770}{$\sim$\+Enigma} ()
+\begin{DoxyCompactList}\small\item\em Destroys the object. \end{DoxyCompactList}\item 
+void \hyperlink{class_enigma_a4b60ea0e93d9076e83d75ff3cfbe6fc3}{laser\+Callback} (const sensor\+\_\+msgs\+::\+Laser\+Scan \&scan)
+\begin{DoxyCompactList}\small\item\em Laser callback for turtlebot laser sensor. \end{DoxyCompactList}\item 
+void \hyperlink{class_enigma_a468f2a08dbf08c32b055b0c3bae63dc7}{detection\+Callback} (const enigma\+::\+Detection \&msg)
+\begin{DoxyCompactList}\small\item\em \hyperlink{class_detection}{Detection} callback for getting the object count. \end{DoxyCompactList}\item 
+bool \hyperlink{class_enigma_af7d2843462441eb80555ba36d4f31401}{is\+Obst} (const sensor\+\_\+msgs\+::\+Laser\+Scan \&scan)
+\begin{DoxyCompactList}\small\item\em Determines if any obst for sensor\+\_\+msgs\+::\+Laser\+Scan. \end{DoxyCompactList}\item 
+bool \hyperlink{class_enigma_acc1fde6fec011f3f51a5198713262d22}{speed\+Service\+CB} (enigma\+::change\+Speed\+::\+Request \&req, enigma\+::change\+Speed\+::\+Response \&res)
+\begin{DoxyCompactList}\small\item\em Speed change service callback. \end{DoxyCompactList}\item 
+bool \hyperlink{class_enigma_a3ac35467cd1fd927e956ff351ed88e12}{switch\+Service\+CB} (enigma\+::start\+Stop\+::\+Request \&req, enigma\+::start\+Stop\+::\+Response \&res)
+\begin{DoxyCompactList}\small\item\em Start stop service callback. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Class for enigma for robot behavior. 
+
+Definition at line 41 of file Enigma.\+hpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_enigma_a10f3e8731f96cb675c04cdac4dfb978a}\label{class_enigma_a10f3e8731f96cb675c04cdac4dfb978a}} 
+\index{Enigma@{Enigma}!Enigma@{Enigma}}
+\index{Enigma@{Enigma}!Enigma@{Enigma}}
+\subsubsection{\texorpdfstring{Enigma()}{Enigma()}}
+{\footnotesize\ttfamily Enigma\+::\+Enigma (\begin{DoxyParamCaption}\item[{ros\+::\+Node\+Handle}]{n\+\_\+ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Overloaded Constructor for \hyperlink{class_enigma}{Enigma}. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em n\+\_\+} & as ros\+::\+Node\+Handle \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 31 of file Enigma.\+cpp.
+
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_enigma_a468f2a08dbf08c32b055b0c3bae63dc7}\label{class_enigma_a468f2a08dbf08c32b055b0c3bae63dc7}} 
+\index{Enigma@{Enigma}!detection\+Callback@{detection\+Callback}}
+\index{detection\+Callback@{detection\+Callback}!Enigma@{Enigma}}
+\subsubsection{\texorpdfstring{detection\+Callback()}{detectionCallback()}}
+{\footnotesize\ttfamily void Enigma\+::detection\+Callback (\begin{DoxyParamCaption}\item[{const enigma\+::\+Detection \&}]{msg }\end{DoxyParamCaption})}
+
+
+
+\hyperlink{class_detection}{Detection} callback for getting the object count. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em msg} & The message as enigma\+::\+Detection \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 86 of file Enigma.\+cpp.
+
+\mbox{\Hypertarget{class_enigma_af7d2843462441eb80555ba36d4f31401}\label{class_enigma_af7d2843462441eb80555ba36d4f31401}} 
+\index{Enigma@{Enigma}!is\+Obst@{is\+Obst}}
+\index{is\+Obst@{is\+Obst}!Enigma@{Enigma}}
+\subsubsection{\texorpdfstring{is\+Obst()}{isObst()}}
+{\footnotesize\ttfamily bool Enigma\+::is\+Obst (\begin{DoxyParamCaption}\item[{const sensor\+\_\+msgs\+::\+Laser\+Scan \&}]{scan }\end{DoxyParamCaption})}
+
+
+
+Determines if any obst for sensor\+\_\+msgs\+::\+Laser\+Scan. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em scan} & The scan as sensor\+\_\+msgs\+::\+Laser\+Scan\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if any obst detected, False otherwise. 
+\end{DoxyReturn}
+
+
+Definition at line 96 of file Enigma.\+cpp.
+
+\mbox{\Hypertarget{class_enigma_a4b60ea0e93d9076e83d75ff3cfbe6fc3}\label{class_enigma_a4b60ea0e93d9076e83d75ff3cfbe6fc3}} 
+\index{Enigma@{Enigma}!laser\+Callback@{laser\+Callback}}
+\index{laser\+Callback@{laser\+Callback}!Enigma@{Enigma}}
+\subsubsection{\texorpdfstring{laser\+Callback()}{laserCallback()}}
+{\footnotesize\ttfamily void Enigma\+::laser\+Callback (\begin{DoxyParamCaption}\item[{const sensor\+\_\+msgs\+::\+Laser\+Scan \&}]{scan }\end{DoxyParamCaption})}
+
+
+
+Laser callback for turtlebot laser sensor. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em scan} & The scan as sensor\+\_\+msgs\+::\+Laser\+Scan \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 60 of file Enigma.\+cpp.
+
+\mbox{\Hypertarget{class_enigma_acc1fde6fec011f3f51a5198713262d22}\label{class_enigma_acc1fde6fec011f3f51a5198713262d22}} 
+\index{Enigma@{Enigma}!speed\+Service\+CB@{speed\+Service\+CB}}
+\index{speed\+Service\+CB@{speed\+Service\+CB}!Enigma@{Enigma}}
+\subsubsection{\texorpdfstring{speed\+Service\+C\+B()}{speedServiceCB()}}
+{\footnotesize\ttfamily bool Enigma\+::speed\+Service\+CB (\begin{DoxyParamCaption}\item[{enigma\+::change\+Speed\+::\+Request \&}]{req,  }\item[{enigma\+::change\+Speed\+::\+Response \&}]{res }\end{DoxyParamCaption})}
+
+
+
+Speed change service callback. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em req} & The request as float \\
+\hline
+{\em res} & The response as bool\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if worked 
+\end{DoxyReturn}
+
+
+Definition at line 119 of file Enigma.\+cpp.
+
+\mbox{\Hypertarget{class_enigma_a3ac35467cd1fd927e956ff351ed88e12}\label{class_enigma_a3ac35467cd1fd927e956ff351ed88e12}} 
+\index{Enigma@{Enigma}!switch\+Service\+CB@{switch\+Service\+CB}}
+\index{switch\+Service\+CB@{switch\+Service\+CB}!Enigma@{Enigma}}
+\subsubsection{\texorpdfstring{switch\+Service\+C\+B()}{switchServiceCB()}}
+{\footnotesize\ttfamily bool Enigma\+::switch\+Service\+CB (\begin{DoxyParamCaption}\item[{enigma\+::start\+Stop\+::\+Request \&}]{req,  }\item[{enigma\+::start\+Stop\+::\+Response \&}]{res }\end{DoxyParamCaption})}
+
+
+
+Start stop service callback. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em req} & The request as bool \\
+\hline
+{\em res} & The resource as bool\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+True if worked 
+\end{DoxyReturn}
+
+
+Definition at line 134 of file Enigma.\+cpp.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/ravib/catkin\+\_\+ws/src/enigma/include/enigma/\hyperlink{_enigma_8hpp}{Enigma.\+hpp}\item 
+/home/ravib/catkin\+\_\+ws/src/enigma/src/\hyperlink{_enigma_8cpp}{Enigma.\+cpp}\end{DoxyCompactItemize}

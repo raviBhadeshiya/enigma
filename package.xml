@@ -88,7 +88,7 @@
   </export>
 
 <!--   <run_depend>turtlebot_gazebo</run_depend>
-  <run_depend>turtlebot_navigation</run_depend>
-  <run_depend>octomap</run_depend>
- -->
+  <run_depend>turtlebot_navigation</run_depend> -->
+  <!-- <run_depend>octomap</run_depend> -->
+
 </package>

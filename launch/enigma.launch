@@ -1,10 +1,10 @@
 
 <launch>
   <arg name="record" default="false"/>
-
+  <arg name="world" default="$(find enigma)/world/final_world_1"/>
   <!-- Start the gazebo env -->
   <include file="$(find turtlebot_gazebo)/launch/turtlebot_world.launch">
-   <arg name="world_file" value="$(find enigma)/world/final_world_1"/>
+   <arg name="world_file" value="$(arg world)"/>
   </include>
 
   <node name="Enigma_node" pkg="enigma" type="enigma_node" output="screen"/>
@@ -12,14 +12,6 @@
   <node name="Detection_node" pkg="enigma" type="detection_node" output="screen"/>
 
   <include file="$(find enigma)/launch/enigma_mapping.launch"/>
-
-  <!-- Gmapping -->
-  <!-- <include file="$(find turtlebot_navigation)/launch/includes/gmapping/gmapping.launch.xml"/> -->
-  <!-- Move base -->
-  <!-- <include file="$(find turtlebot_navigation)/launch/includes/move_base.launch.xml"/> -->
-
-  <!-- Start frontier_exploration -->
-  <!-- <include file="$(find turtlebot_rviz_launchers)/launch/view_navigation.launch" /> -->
 
   <node name="record" pkg="rosbag" type="record" args="--duration=35.0 -a -x /camera/(.*) -O $(find enigma)/result/enigma.bag" if="$(arg record)"/>
 

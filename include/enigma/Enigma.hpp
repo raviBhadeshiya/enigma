@@ -127,5 +127,5 @@ class Enigma {
   /**
    * @brief      The bool switch for robot to start and stop
    */
-  bool switch_ = false;
+  bool switch_ = true;
 };
