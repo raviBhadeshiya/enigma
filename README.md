@@ -115,4 +115,3 @@ For sprint planning: [Click Here](https://docs.google.com/document/d/1hJ8q-_5HhW
 
 ### Presentation
 Slides : [click here](https://docs.google.com/presentation/d/1KM6IbHGB0xqtuu0a0-CgijcBst5EShQxvior-kgVUcg/edit?usp=sharing)
-Video : [click here](https://youtu.be/KYh7dtqQ2tw)
